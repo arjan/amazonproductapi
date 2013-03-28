@@ -31,3 +31,18 @@ A single item can be looked up like this:
 
     {ok, XML} = amazonproductapi:itemLookup("ASIN", "B007Z7UENE", Config).
 
+
+Running the tests
+-----------------
+
+To run the tests, you need a `secrets.config` file in the root of the
+application, containing the following config:
+
+    {endpoint, "webservices.amazon.de"}.
+    {associate_tag, "youraffiliate-33"}.
+    {access_key, "fdsfdsfsdf"}.
+    {secret, "fdsfdsfsd"}.
+
+Now, run the tests as follows:
+
+    rebar get-dep compile eunit
