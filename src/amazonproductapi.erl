@@ -5,6 +5,7 @@
 
 -export([
          itemSearch/2,
+         itemSearch/3,
          itemLookup/3
         ]).
 
@@ -14,7 +15,11 @@
 
 -spec itemSearch(string(), #amazonproductapi_config{}) -> {ok, #xmlElement{}}.
 itemSearch(Keywords, Config) ->
-    do_rest_call(get, "ItemSearch", [{"Keywords", Keywords}], Config).
+    itemSearch(Keywords, 1, Config).
+
+-spec itemSearch(string(), integer(), #amazonproductapi_config{}) -> {ok, #xmlElement{}}.
+itemSearch(Keywords, ItemPage, Config) ->
+    do_rest_call(get, "ItemSearch", [{"Keywords", Keywords}, {"ItemPage", integer_to_list(ItemPage)}], Config).
 
 -spec itemLookup(string(), string(), #amazonproductapi_config{}) -> {ok, #xmlElement{}}.
 itemLookup(IdType, ItemId, Config) ->
