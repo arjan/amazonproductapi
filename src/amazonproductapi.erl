@@ -45,10 +45,7 @@ do_rest_call(RequestMethod, Operation, Params, Config) ->
         ++ ?REQUEST_URI ++ "\n"
         ++ StringedParams,
 
-    io:format("~s~n", [SignString]),
     Signature = z_url:percent_encode(z_convert:to_list(base64:encode(hmac:hmac256(Config#amazonproductapi_config.secret, SignString)))),
-
-    io:format("~p~n", [Signature]),
 
     Url = ?PROTOCOL ++ "://" ++ Config#amazonproductapi_config.endpoint ++ ?REQUEST_URI ++ "?"
         ++ StringedParams ++ "&Signature=" ++ Signature,
@@ -66,11 +63,9 @@ do_rest_call(RequestMethod, Operation, Params, Config) ->
 map_request_method(get) -> "GET";
 map_request_method(post) -> "POST".
 
-
 interpret_body(_Headers, Body) ->
     {XML, _} = xmerl_scan:string(Body),
     XML.
-
 
 make_date() ->
     z_convert:to_list(z_dateformat:format(calendar:local_time(), "c", [])).
